@@ -3,7 +3,7 @@ import { shallow } from '../../config/enzyme';
 import Todos from '../../pages/Todos';
 import TodosList from '../../components/TodosList';
 
-describe('todos page', () => {
+describe('todos page component', () => {
   it('should render a input focused', () => {
     const wrapper = shallow(<Todos />);
 
@@ -19,5 +19,13 @@ describe('todos page', () => {
     expect(wrapper.find('TodoItem').first().html()).toEqual(
       '<div>buy bread</div>',
     );
+  });
+});
+
+describe('#getTodos', () => {
+  it('should get the todos list from api', () => {
+    const wrapper = shallow(<Todos />);
+    // console.log(wrapper.props());
+    // expect(wrapper.getTodos()).toEqual([]);
   });
 });
