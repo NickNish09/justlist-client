@@ -1,21 +1,15 @@
-import React, { FC } from 'react';
-import logo from './assets/logo.svg';
-import './styles/App.css';
+import React, { FC, useState } from 'react';
+import UrlPlaceholder from './components/UrlPlaceholder';
+import Todos from './pages/Todos';
 
-const App: FC = () => (
-  <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>{window.location.pathname}</p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
-  </div>
-);
+const App: FC = () => {
+  const [path, setPath] = useState<string>(window.location.pathname);
+  return path === '/' ? (
+    <div className="home-container background-light">
+      <UrlPlaceholder />
+    </div>
+  ) : (
+    <Todos />
+  );
+};
 export default App;
