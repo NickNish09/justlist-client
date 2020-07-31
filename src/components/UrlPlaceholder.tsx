@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import { Row } from 'antd';
 
 type UrlPlaceholderProps = {
@@ -8,16 +8,24 @@ type UrlPlaceholderProps = {
 const UrlPlaceholder: FC<UrlPlaceholderProps> = ({
   placeholder = 'mytodolist',
 }: UrlPlaceholderProps) => {
+  const urlInput = useRef<HTMLInputElement>(null);
+
   const handleKeyDown = (e: any) => {
+    const value = urlInput.current !== null ? urlInput.current.value : '';
     if (e.key === 'Enter') {
-      window.location.pathname = 'oi';
+      window.location.pathname = value;
     }
   };
 
   return (
     <Row>
-      <p className="p-url">justlist.tk/</p>
+      <p className="p-url">
+        {document.domain}
+        /
+      </p>
+
       <input
+        ref={urlInput}
         type="text"
         placeholder={placeholder}
         className="input-url"
