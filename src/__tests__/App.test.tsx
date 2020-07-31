@@ -1,9 +1,13 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { shallow } from '../config/enzyme';
 import App from '../App';
+import UrlPlaceholder from '../components/UrlPlaceholder';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('home page', () => {
+  it('should render a url input', () => {
+    const wrapper = shallow(<App />);
+
+    expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.contains(<UrlPlaceholder />)).toBeTruthy();
+  });
 });
