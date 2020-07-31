@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-const TodoItem = () => {
-  return <div>todo item</div>;
-};
+interface TodoProps {
+  todo: ITodoItem;
+}
+
+export interface ITodoItem {
+  _id: string;
+  content: string;
+  isFinished: boolean;
+}
+
+const TodoItem: FC<TodoProps> = ({ todo }: TodoProps) => (
+  <div>{todo.content}</div>
+);
 
 export default TodoItem;
