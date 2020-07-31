@@ -16,7 +16,6 @@ describe('todos page', () => {
 
     expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.find('TodoItem')).toHaveLength(todos.length);
-    console.log(wrapper.find('TodoItem').first().text());
     expect(wrapper.find('TodoItem').first().html()).toEqual(
       '<div>buy bread</div>',
     );
