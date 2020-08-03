@@ -8,3 +8,8 @@ export const findOrCreatePage = (pageUrl: string): Promise<AxiosResponse> => (
 export const createTodo = (page: string, content: string): Promise<AxiosResponse> => (
   api.post('/todos', { page, content })
 );
+
+export const updateTodo = (todoId: string, isFinished?: boolean, content?: string):
+  Promise<AxiosResponse> => (
+  api.put(`/todos/${todoId}`, { content, isFinished })
+);

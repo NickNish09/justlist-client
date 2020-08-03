@@ -5,7 +5,7 @@ import TodosList from '../../components/TodosList';
 
 describe('todos page component', () => {
   it('should render a input focused', () => {
-    const wrapper = shallow(<Todos />);
+    const wrapper = shallow(<Todos path="todos" />);
 
     expect(wrapper.exists()).toBeTruthy();
   });
