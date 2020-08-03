@@ -13,3 +13,7 @@ export const updateTodo = (todoId: string, isFinished?: boolean, content?: strin
   Promise<AxiosResponse> => (
   api.put(`/todos/${todoId}`, { content, isFinished })
 );
+
+export const deleteTodo = (todoId: string): Promise<AxiosResponse> => (
+  api.delete(`/todos/${todoId}`)
+);

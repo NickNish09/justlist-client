@@ -1,6 +1,7 @@
 import React, { FC, useRef, useState } from 'react';
 import { Checkbox } from 'antd';
-import { updateTodo } from '../services/todos';
+import { deleteTodo, updateTodo } from '../services/todos';
+import { useTodos } from '../contexts/TodosContext';
 
 interface TodoProps {
   todo: ITodoItem;
@@ -19,6 +20,7 @@ const TodoItem: FC<TodoProps> = ({ todo, index }: TodoProps) => {
   const doneTypingInterval = 1000;
   const [typingTimer, setTypingTimer] = useState<number>(0);
   const todoInput = useRef<HTMLInputElement>(null);
+  const { removeTodo } = useTodos();
 
   const onCheck = (e: any) => {
     const isFinished = e.target.checked;
@@ -49,6 +51,10 @@ const TodoItem: FC<TodoProps> = ({ todo, index }: TodoProps) => {
       onStopTyping();
       window.clearTimeout(typingTimer);
       todoInput!.current!.blur();
+      const todosInputs = document.querySelectorAll('input[type="text"]');
+      window.setTimeout(() => {
+        (todosInputs[index + 1] as HTMLElement).focus(); // focus previous input
+      }, 0);
     } else {
       window.clearTimeout(typingTimer);
       setTypingTimer(window.setTimeout(onStopTyping, doneTypingInterval));
@@ -57,7 +63,12 @@ const TodoItem: FC<TodoProps> = ({ todo, index }: TodoProps) => {
 
   const onKeyDown = (e: any) => {
     if ((e.key === 'Backspace' || e.key === 'Delete') && content === '') {
-      console.log(index);
+      // delete todo
+      deleteTodo(todo._id).then((response) => {
+        removeTodo(todo._id);
+        console.log(response.data);
+      }).catch((err) => console.log(err.response));
+
       const todosInputs = document.querySelectorAll('input[type="text"]');
       window.setTimeout(() => {
         (todosInputs[index - 1] as HTMLElement).focus(); // focus previous input
