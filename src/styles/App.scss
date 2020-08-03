@@ -36,9 +36,12 @@ $font-x-large: 30px;
   outline: none;
 }
 
+.container{
+  padding: 0.9em;
+}
+
 .path-title {
   font-size: $font-x-large;
-  margin-left: 0.3em;
 }
 
 .text-striked{
