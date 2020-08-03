@@ -1,5 +1,10 @@
 import React, { createContext, useState, useContext } from 'react';
-import { ITodoItem } from '../components/TodoItem';
+
+interface ITodoItem {
+  _id: string;
+  content: string;
+  isFinished: boolean;
+}
 
 interface ContextProps {
   todos: Array<ITodoItem>;
