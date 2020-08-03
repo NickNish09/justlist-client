@@ -35,6 +35,7 @@ const TodoItem: FC<TodoProps> = ({ todo, index }: TodoProps) => {
 
   const onChangeText = (e: any) => {
     setContent(e.target.value);
+    console.log(index);
   };
 
   const onStopTyping = () => {
@@ -64,20 +65,21 @@ const TodoItem: FC<TodoProps> = ({ todo, index }: TodoProps) => {
   const onKeyDown = (e: any) => {
     if ((e.key === 'Backspace' || e.key === 'Delete') && content === '') {
       // delete todo
+      removeTodo(todo._id);
       deleteTodo(todo._id).then((response) => {
-        removeTodo(todo._id);
         console.log(response.data);
+        if (index !== 0) {
+          const todosInputs = document.querySelectorAll('input[type="text"]');
+          window.setTimeout(() => {
+            (todosInputs[index - 1] as HTMLElement).focus(); // focus previous input
+          }, 0);
+        }
       }).catch((err) => console.log(err.response));
-
-      const todosInputs = document.querySelectorAll('input[type="text"]');
-      window.setTimeout(() => {
-        (todosInputs[index - 1] as HTMLElement).focus(); // focus previous input
-      }, 0);
     }
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: 'red', padding: '5px' }}>
       <Checkbox onChange={onCheck} checked={checked}>
         <input
           className={checked ? 'text-striked' : 'text-todo'}
