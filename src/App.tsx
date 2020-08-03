@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import UrlPlaceholder from './components/UrlPlaceholder';
 import Todos from './pages/Todos';
+import TodosProvider from './contexts/TodosContext';
 
 const App: FC = () => {
   const [path, setPath] = useState<string>(window.location.pathname);
@@ -13,7 +14,9 @@ const App: FC = () => {
       <UrlPlaceholder />
     </div>
   ) : (
-    <Todos path={path} />
+    <TodosProvider>
+      <Todos path={path} />
+    </TodosProvider>
   );
 };
 export default App;

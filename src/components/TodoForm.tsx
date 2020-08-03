@@ -1,15 +1,16 @@
 import React, { FC, useState } from 'react';
 import { ITodoItem } from './TodoItem';
 import { createTodo } from '../services/todos';
+import { useTodos } from '../contexts/TodosContext';
 
 interface TodoFormProps {
   todo?: ITodoItem;
-  setTodos: any;
   pageId: string;
 }
 
-const TodoForm: FC<TodoFormProps> = ({ todo, setTodos, pageId }: TodoFormProps) => {
+const TodoForm: FC<TodoFormProps> = ({ todo, pageId }: TodoFormProps) => {
   const [content, setContent] = useState<string>(todo ? todo.content : '');
+  const { appendTodo } = useTodos();
 
   const handleKeyPress = (e: any) => {
     if (e.key === 'Enter') {
@@ -17,7 +18,7 @@ const TodoForm: FC<TodoFormProps> = ({ todo, setTodos, pageId }: TodoFormProps) 
       createTodo(pageId, content).then((response) => {
         setContent('');
         console.log(response.data);
-        setTodos((prevTodos: Array<ITodoItem>) => [...prevTodos, response.data.todo]);
+        appendTodo(response.data.todo);
       }).catch((err) => {
         console.log(err.response);
       });
