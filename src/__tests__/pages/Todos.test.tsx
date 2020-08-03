@@ -16,15 +16,12 @@ describe('todos page component', () => {
 
     expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.find('TodoItem')).toHaveLength(todos.length);
-    expect(wrapper.find('TodoItem').first().html()).toEqual(
-      '<div>buy bread</div>',
-    );
   });
 });
 
 describe('#getTodos', () => {
   it('should get the todos list from api', () => {
-    const wrapper = shallow(<Todos />);
+    // const wrapper = shallow(<Todos />);
     // console.log(wrapper.props());
     // expect(wrapper.getTodos()).toEqual([]);
   });
