@@ -4,6 +4,7 @@ import { updateTodo } from '../services/todos';
 
 interface TodoProps {
   todo: ITodoItem;
+  index: number;
 }
 
 export interface ITodoItem {
@@ -12,7 +13,7 @@ export interface ITodoItem {
   isFinished: boolean;
 }
 
-const TodoItem: FC<TodoProps> = ({ todo }: TodoProps) => {
+const TodoItem: FC<TodoProps> = ({ todo, index }: TodoProps) => {
   const [checked, setChecked] = useState<boolean>(todo.isFinished);
   const [content, setContent] = useState<string>(todo.content);
   const doneTypingInterval = 1000;
@@ -43,6 +44,7 @@ const TodoItem: FC<TodoProps> = ({ todo }: TodoProps) => {
   };
 
   const onKeyUp = (e: any) => {
+    console.log(e.key);
     if (e.key === 'Enter') {
       onStopTyping();
       window.clearTimeout(typingTimer);
@@ -50,6 +52,16 @@ const TodoItem: FC<TodoProps> = ({ todo }: TodoProps) => {
     } else {
       window.clearTimeout(typingTimer);
       setTypingTimer(window.setTimeout(onStopTyping, doneTypingInterval));
+    }
+  };
+
+  const onKeyDown = (e: any) => {
+    if ((e.key === 'Backspace' || e.key === 'Delete') && content === '') {
+      console.log(index);
+      const todosInputs = document.querySelectorAll('input[type="text"]');
+      window.setTimeout(() => {
+        (todosInputs[index - 1] as HTMLElement).focus(); // focus previous input
+      }, 0);
     }
   };
 
@@ -62,6 +74,7 @@ const TodoItem: FC<TodoProps> = ({ todo }: TodoProps) => {
           value={content}
           onChange={onChangeText}
           onKeyUp={onKeyUp}
+          onKeyDown={onKeyDown}
           ref={todoInput}
         />
       </Checkbox>

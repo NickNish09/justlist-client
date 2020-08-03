@@ -1,18 +1,17 @@
 import React, { FC, useState } from 'react';
-import { ITodoItem } from './TodoItem';
 import { createTodo } from '../services/todos';
 import { useTodos } from '../contexts/TodosContext';
 
 interface TodoFormProps {
-  todo?: ITodoItem;
   pageId: string;
 }
 
-const TodoForm: FC<TodoFormProps> = ({ todo, pageId }: TodoFormProps) => {
-  const [content, setContent] = useState<string>(todo ? todo.content : '');
+const TodoForm: FC<TodoFormProps> = ({ pageId }: TodoFormProps) => {
+  const [content, setContent] = useState<string>('');
   const { appendTodo } = useTodos();
 
-  const handleKeyPress = (e: any) => {
+  const handleKeyDown = (e: any) => {
+    console.log(e.key);
     if (e.key === 'Enter') {
       console.log(content);
       createTodo(pageId, content).then((response) => {
@@ -22,6 +21,15 @@ const TodoForm: FC<TodoFormProps> = ({ todo, pageId }: TodoFormProps) => {
       }).catch((err) => {
         console.log(err.response);
       });
+    } else if (e.key === 'Backspace' || e.key === 'Delete') {
+      if (content === '') {
+        console.log('blur');
+        const todosInputs = document.querySelectorAll('input[type="text"]');
+        window.setTimeout(() => {
+          (todosInputs[todosInputs.length - 2] as HTMLElement).focus();
+        }, 0);
+        // document.forms[0].elements[9 - 1].focus();
+      }
     }
   };
   return (
@@ -29,15 +37,11 @@ const TodoForm: FC<TodoFormProps> = ({ todo, pageId }: TodoFormProps) => {
       type="text"
       placeholder="new todo..."
       value={content}
+      onKeyDown={(e) => handleKeyDown(e)}
       onChange={(e) => setContent(e.target.value)}
       autoFocus
-      onKeyPress={(e) => handleKeyPress(e)}
     />
   );
-};
-
-TodoForm.defaultProps = {
-  todo: { _id: '', isFinished: false, content: '' },
 };
 
 export default TodoForm;

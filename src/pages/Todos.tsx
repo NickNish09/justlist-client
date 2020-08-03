@@ -27,8 +27,8 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   return (
     <div className="container">
       <p className="path-title">{window.location.pathname}</p>
-      <TodoForm pageId={pageId} />
       <TodosList todos={todos} />
+      <TodoForm pageId={pageId} />
     </div>
   );
 };

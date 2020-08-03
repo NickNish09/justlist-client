@@ -7,8 +7,8 @@ interface TodosListProps {
 
 const TodosList: FC<TodosListProps> = ({ todos }: TodosListProps) => (
   <div>
-    {todos.map((todo) => (
-      <TodoItem todo={todo} key={todo._id} />
+    {todos.map((todo, index) => (
+      <TodoItem todo={todo} key={todo._id} index={index} />
     ))}
   </div>
 );
