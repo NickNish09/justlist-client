@@ -12,7 +12,7 @@ describe('todos page component', () => {
 
   it('should render the list of todos', () => {
     const todos = [{ _id: '1', content: 'buy bread', isFinished: false }];
-    const wrapper = shallow(<TodosList />);
+    const wrapper = shallow(<TodosList pageId="1" />);
 
     expect(wrapper.exists()).toBeTruthy();
     // expect(wrapper.find('TodoItem')).toHaveLength(todos.length);

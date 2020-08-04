@@ -25,12 +25,15 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   }, [path]);
 
   return (
-    <div className="container">
-      <p className="path-title">{window.location.pathname}</p>
-      <TodosList />
-      <br />
-      <TodoForm pageId={pageId} />
-    </div>
+    pageId === '' ? <div>loading...</div>
+      : (
+        <div className="container">
+          <p className="path-title">{window.location.pathname}</p>
+          <TodosList pageId={pageId} />
+          <br />
+          <TodoForm pageId={pageId} />
+        </div>
+      )
   );
 };
 
