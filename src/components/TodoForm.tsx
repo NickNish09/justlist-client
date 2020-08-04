@@ -17,7 +17,7 @@ const TodoForm: FC<TodoFormProps> = ({ pageId }: TodoFormProps) => {
       createTodo(pageId, content).then((response) => {
         setContent('');
         console.log(response.data);
-        appendTodo(response.data.todo);
+        // appendTodo(response.data.todo);
       }).catch((err) => {
         console.log(err.response);
       });
