@@ -5,6 +5,7 @@ import TodosList from '../components/TodosList';
 import { findOrCreatePage } from '../services/todos';
 import TodoForm from '../components/TodoForm';
 import { useTodos } from '../contexts/TodosContext';
+import { TODO_UPDATE_TYPE } from '../config/constants';
 
 interface TodosProps {
   path: string;
@@ -13,7 +14,7 @@ interface TodosProps {
 const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   // const [todos, setTodos] = useState<Array<ITodoItem>>([]);
   const [pageId, setPageId] = useState<string>('');
-  const { setTodos } = useTodos();
+  const { setTodos, updateTodo } = useTodos();
 
   useEffect(() => {
     const socket = socketIOClient('http://localhost:3000');
@@ -21,7 +22,11 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
       console.log('connected');
     });
     socket.on(pageId, (data: any) => {
-      console.log(data);
+      setTodos(data.todos);
+    });
+    socket.on(`${TODO_UPDATE_TYPE}${pageId}`, (data: any) => {
+      console.log(data.todo);
+      updateTodo(data.todo);
     });
   }, [pageId]);
 

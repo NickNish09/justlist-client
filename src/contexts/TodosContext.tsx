@@ -10,12 +10,13 @@ interface ContextProps {
   todos: Array<ITodoItem>;
   setTodos(data: Array<ITodoItem>): void;
   appendTodo(todo: ITodoItem): void;
+  updateTodo(todo: ITodoItem): void;
   removeTodo(todoId: string): void;
 }
 
 export const TodosContext = createContext<ContextProps>(
   {
-    todos: [], setTodos() {}, appendTodo() {}, removeTodo() {},
+    todos: [], setTodos() {}, appendTodo() {}, removeTodo() {}, updateTodo() {},
   },
 );
 
@@ -30,6 +31,20 @@ const TodosProvider = ({ children }: any) => {
     removeTodo: (todoId: string) => setTodos(
       (prevTodos: Array<ITodoItem>) => (prevTodos.filter((todo: ITodoItem) => todo._id !== todoId)),
     ),
+    updateTodo: (todo: ITodoItem) => setTodos((prevTodos: Array<ITodoItem>) => {
+      const index = prevTodos.findIndex(
+        (x) => x._id === todo._id,
+      );
+      if (index === -1) {
+        console.log('nao encontrado');
+        return prevTodos;
+      }
+      return [
+        ...prevTodos.slice(0, index),
+        { ...prevTodos[index], ...todo },
+        ...prevTodos.slice(index + 1),
+      ];
+    }),
   };
 
   return (
