@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import socketIOClient from 'socket.io-client';
 import { ITodoItem } from '../components/TodoItem';
 import TodosList from '../components/TodosList';
 import { findOrCreatePage } from '../services/todos';
@@ -13,6 +14,16 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   // const [todos, setTodos] = useState<Array<ITodoItem>>([]);
   const [pageId, setPageId] = useState<string>('');
   const { setTodos } = useTodos();
+
+  useEffect(() => {
+    const socket = socketIOClient('http://localhost:3000');
+    socket.on('connect', () => {
+      console.log('connected');
+    });
+    socket.on(pageId, (data: any) => {
+      console.log(data);
+    });
+  }, [pageId]);
 
   useEffect(() => {
     console.log(path);

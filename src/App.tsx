@@ -5,6 +5,7 @@ import TodosProvider from './contexts/TodosContext';
 
 const App: FC = () => {
   const [path, setPath] = useState<string>(window.location.pathname);
+
   useEffect(() => {
     setPath(window.location.pathname);
   }, [window.location.pathname]);
