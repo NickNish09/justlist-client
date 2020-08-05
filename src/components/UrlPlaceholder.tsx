@@ -18,7 +18,7 @@ const UrlPlaceholder: FC<UrlPlaceholderProps> = ({
   };
 
   return (
-    <Row>
+    <div className="container-url">
       <p className="p-url">
         {document.domain}
         /
@@ -32,7 +32,7 @@ const UrlPlaceholder: FC<UrlPlaceholderProps> = ({
         autoFocus
         onKeyDown={(e) => handleKeyDown(e)}
       />
-    </Row>
+    </div>
   );
 };
 
