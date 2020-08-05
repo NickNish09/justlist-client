@@ -6,6 +6,7 @@ import { findOrCreatePage } from '../services/todos';
 import TodoForm from '../components/TodoForm';
 import { useTodos } from '../contexts/TodosContext';
 import { TODO_CREATE_TYPE, TODO_DELETE_TYPE, TODO_UPDATE_TYPE } from '../config/constants';
+import { productionSocketUrl } from '../services/api';
 
 interface TodosProps {
   path: string;
@@ -19,7 +20,7 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   } = useTodos();
 
   useEffect(() => {
-    const socket = socketIOClient('http://161.35.125.224:3000');
+    const socket = socketIOClient(productionSocketUrl);
     socket.on('connect', () => {
       console.log('connected');
     });
