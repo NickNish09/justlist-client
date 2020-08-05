@@ -40,6 +40,7 @@ const TodoForm: FC<TodoFormProps> = ({ pageId }: TodoFormProps) => {
       onKeyDown={(e) => handleKeyDown(e)}
       onChange={(e) => setContent(e.target.value)}
       autoFocus
+      className="todo-form-input"
     />
   );
 };

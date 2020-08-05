@@ -1,10 +1,21 @@
 @import '~antd/dist/antd.css';
+@import url('https://fonts.googleapis.com/css2?family=Recursive:wght@300&display=swap');
 
 $light-bg-color: #dedede;
+$light: #e2e2e2;
+$primary: #1e237e;
+$primary-dark: #151959;
 $dark-bg-color: #4d4d4d;
+$dark: #1b1b1b;
 $border-color: red;
 $font-large: 24px;
 $font-x-large: 30px;
+
+@import "todos";
+
+* {
+  font-family: 'Recursive', sans-serif;
+}
 
 .home-container{
   margin: 0;
@@ -34,6 +45,17 @@ $font-x-large: 30px;
   background: transparent;
   font-size: $font-large;
   outline: none;
+}
+
+.todo-form-input, .todo-form-input:focus {
+  margin-left: 2px;
+  border-width: 0;
+  font-size: $font-large;
+  outline: none;
+  border-radius: 5px;
+  width: 100%;
+  padding: 0 0.3em;
+  color: $dark;
 }
 
 .container{

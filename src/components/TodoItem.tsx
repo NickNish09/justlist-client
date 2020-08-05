@@ -1,5 +1,6 @@
 import React, { FC, useRef, useState } from 'react';
 import { Checkbox } from 'antd';
+import { InsertRowLeftOutlined } from '@ant-design/icons';
 import { deleteTodo, updateTodo } from '../services/todos';
 import { useTodos } from '../contexts/TodosContext';
 
@@ -79,18 +80,18 @@ const TodoItem: FC<TodoProps> = ({ todo, index }: TodoProps) => {
   };
 
   return (
-    <div style={{ backgroundColor: 'red', padding: '5px' }}>
-      <Checkbox onChange={onCheck} checked={checked}>
-        <input
-          className={checked ? 'text-striked' : 'text-todo'}
-          type="text"
-          value={content}
-          onChange={onChangeText}
-          onKeyUp={onKeyUp}
-          onKeyDown={onKeyDown}
-          ref={todoInput}
-        />
-      </Checkbox>
+    <div className="todo-container">
+      <InsertRowLeftOutlined className="todo-drag-icon" />
+      <Checkbox onChange={onCheck} checked={checked} className="todo-checkbox" />
+      <input
+        className={checked ? 'text-striked todo-input' : 'text-todo todo-input'}
+        type="text"
+        value={content}
+        onChange={onChangeText}
+        onKeyUp={onKeyUp}
+        onKeyDown={onKeyDown}
+        ref={todoInput}
+      />
     </div>
   );
 };
