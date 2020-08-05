@@ -19,7 +19,7 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   } = useTodos();
 
   useEffect(() => {
-    const socket = socketIOClient('http://localhost:3000');
+    const socket = socketIOClient('http://161.35.125.224:3000');
     socket.on('connect', () => {
       console.log('connected');
     });
