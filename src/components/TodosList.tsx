@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import TodoItem, { ITodoItem } from './TodoItem';
@@ -35,16 +35,18 @@ const TodosList: FC<TodoListProps> = ({ pageId }: TodoListProps) => {
     </div>
   ));
 
-  const onSortEnd = ({ oldIndex, newIndex }: ISortEnd) => {
-    setTodos(arrayMove(todos, oldIndex, newIndex));
-  };
-
-  useEffect(() => {
-    const formatedArray = todos.map((todo, index) => ({ position: index, todoId: todo._id }));
+  const updateTodosOrderRequest = (newTodos: Array<ITodoItem>) => {
+    const formatedArray = newTodos.map((todo, index) => ({ position: index, todoId: todo._id }));
     updateTodosOrder(pageId, formatedArray).then((response) => {
       console.log(response.data);
     }).catch((err) => console.log(err));
-  }, [todos]);
+  };
+
+  const onSortEnd = ({ oldIndex, newIndex }: ISortEnd) => {
+    const newTodos = arrayMove(todos, oldIndex, newIndex);
+    setTodos(newTodos);
+    updateTodosOrderRequest(newTodos);
+  };
 
   return <SortableList onSortEnd={onSortEnd} />;
 };

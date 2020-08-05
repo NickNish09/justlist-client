@@ -1,9 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
+import socketIOClient from 'socket.io-client';
 import { ITodoItem } from '../components/TodoItem';
 import TodosList from '../components/TodosList';
 import { findOrCreatePage } from '../services/todos';
 import TodoForm from '../components/TodoForm';
 import { useTodos } from '../contexts/TodosContext';
+import { TODO_CREATE_TYPE, TODO_UPDATE_TYPE } from '../config/constants';
 
 interface TodosProps {
   path: string;
@@ -12,7 +14,25 @@ interface TodosProps {
 const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   // const [todos, setTodos] = useState<Array<ITodoItem>>([]);
   const [pageId, setPageId] = useState<string>('');
-  const { setTodos } = useTodos();
+  const { setTodos, updateTodo, appendTodo } = useTodos();
+
+  useEffect(() => {
+    const socket = socketIOClient('http://localhost:3000');
+    socket.on('connect', () => {
+      console.log('connected');
+    });
+    socket.on(pageId, (data: any) => {
+      setTodos(data.todos);
+    });
+    socket.on(`${TODO_UPDATE_TYPE}${pageId}`, (data: any) => {
+      console.log(data.todo);
+      updateTodo(data.todo);
+    });
+    socket.on(`${TODO_CREATE_TYPE}${pageId}`, (data: any) => {
+      console.log(data.todo);
+      appendTodo(data.todo);
+    });
+  }, [pageId]);
 
   useEffect(() => {
     console.log(path);
