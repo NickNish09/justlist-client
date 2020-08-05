@@ -28,6 +28,7 @@ module.exports = {
         extensions: ['.tsx'],
       },
     ],
+    "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
     "import/extensions": [
       "error",
       "ignorePackages",
