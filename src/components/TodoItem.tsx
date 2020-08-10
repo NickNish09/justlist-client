@@ -40,11 +40,13 @@ const TodoItem: FC<TodoProps> = ({ todo, index }: TodoProps) => {
   };
 
   const onStopTyping = () => {
-    updateTodo(todo._id, checked, content).then((response) => {
-      console.log(response);
-    }).catch((err) => {
-      console.log(err.response);
-    });
+    if (todo.content !== content) {
+      updateTodo(todo._id, checked, content).then((response) => {
+        console.log(response);
+      }).catch((err) => {
+        console.log(err.response);
+      });
+    }
   };
 
   const onKeyUp = (e: any) => {

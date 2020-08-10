@@ -6,7 +6,7 @@ import { findOrCreatePage } from '../services/todos';
 import TodoForm from '../components/TodoForm';
 import { useTodos } from '../contexts/TodosContext';
 import { TODO_CREATE_TYPE, TODO_DELETE_TYPE, TODO_UPDATE_TYPE } from '../config/constants';
-import { productionSocketUrl } from '../services/api';
+import { devSocketUrl, productionSocketUrl } from '../services/api';
 
 interface TodosProps {
   path: string;
@@ -16,11 +16,11 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   // const [todos, setTodos] = useState<Array<ITodoItem>>([]);
   const [pageId, setPageId] = useState<string>('');
   const {
-    setTodos, updateTodo, appendTodo, removeTodo,
+    checkIfContainsTodo, setTodos, updateTodo, appendTodo, removeTodo, todos,
   } = useTodos();
 
   useEffect(() => {
-    const socket = socketIOClient(productionSocketUrl);
+    const socket = socketIOClient(devSocketUrl);
     socket.on('connect', () => {
       console.log('connected');
     });
@@ -33,7 +33,11 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
     });
     socket.on(`${TODO_CREATE_TYPE}${pageId}`, (data: any) => {
       console.log(data.todo);
-      appendTodo(data.todo);
+      console.log(todos);
+      console.log(checkIfContainsTodo(data.todo._id));
+      if (!checkIfContainsTodo(data.todo._id)) { // if doesnt contain the todo
+        appendTodo(data.todo);
+      }
     });
     socket.on(`${TODO_DELETE_TYPE}${pageId}`, (data: any) => {
       console.log(data.todo);

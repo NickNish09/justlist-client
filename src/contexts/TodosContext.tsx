@@ -12,11 +12,17 @@ interface ContextProps {
   appendTodo(todo: ITodoItem): void;
   updateTodo(todo: ITodoItem): void;
   removeTodo(todoId: string): void;
+  checkIfContainsTodo(todoId: string): boolean;
 }
 
 export const TodosContext = createContext<ContextProps>(
   {
-    todos: [], setTodos() {}, appendTodo() {}, removeTodo() {}, updateTodo() {},
+    todos: [],
+    setTodos() {},
+    appendTodo() {},
+    removeTodo() {},
+    updateTodo() {},
+    checkIfContainsTodo() { return false; },
   },
 );
 
@@ -45,6 +51,7 @@ const TodosProvider = ({ children }: any) => {
         ...prevTodos.slice(index + 1),
       ];
     }),
+    checkIfContainsTodo: (todoId: string) => todos.some((td) => td._id === todoId),
   };
 
   return (
