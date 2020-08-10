@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import TodoItem, { ITodoItem } from './TodoItem';
@@ -21,6 +21,7 @@ interface TodoListProps {
 
 const TodosList: FC<TodoListProps> = ({ pageId }: TodoListProps) => {
   const { todos, setTodos } = useTodos();
+
   const SortableItem = SortableElement(
     ({ todo, sortIndex }: ITodoItemIndex) => (
       <TodoItem todo={todo} key={todo._id} index={sortIndex} />
@@ -48,6 +49,8 @@ const TodosList: FC<TodoListProps> = ({ pageId }: TodoListProps) => {
     updateTodosOrderRequest(newTodos);
   };
 
-  return <SortableList onSortEnd={onSortEnd} />;
+  return (
+    <SortableList onSortEnd={onSortEnd} />
+  );
 };
 export default TodosList;

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
+import { HotKeys } from 'react-hotkeys';
 import { ITodoItem } from '../components/TodoItem';
 import TodosList from '../components/TodosList';
 import { findOrCreatePage } from '../services/todos';
@@ -8,6 +9,10 @@ import { useTodos } from '../contexts/TodosContext';
 import { TODO_CREATE_TYPE, TODO_DELETE_TYPE, TODO_UPDATE_TYPE } from '../config/constants';
 import { devSocketUrl, productionSocketUrl } from '../services/api';
 import PageUrls, { IPage } from '../components/PageUrls';
+
+const keyMap = {
+  SELECT_ALL: ['command+a', 'ctrl+a', 't', 'up'],
+};
 
 interface TodosProps {
   path: string;
@@ -20,6 +25,15 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   const {
     checkIfContainsTodo, setTodos, updateTodo, appendTodo, removeTodo, todos,
   } = useTodos();
+
+  const selectAll = () => {
+    // logic here
+    console.log('all');
+  };
+
+  const handlers = {
+    SELECT_ALL: selectAll,
+  };
 
   useEffect(() => {
     const socket = socketIOClient(devSocketUrl);
@@ -61,13 +75,17 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   return (
     pageId === '' ? <div>loading...</div>
       : (
-        <div className="container">
-          <p className="path-title">{window.location.pathname}</p>
-          <PageUrls pages={pages} />
-          <TodosList pageId={pageId} />
-          <br />
-          <TodoForm pageId={pageId} />
-        </div>
+        <HotKeys keyMap={keyMap}>
+          <div className="container">
+            <HotKeys handlers={handlers}>
+              <p className="path-title">{window.location.pathname}</p>
+              <PageUrls pages={pages} />
+              <TodosList pageId={pageId} />
+              <br />
+              <TodoForm pageId={pageId} />
+            </HotKeys>
+          </div>
+        </HotKeys>
       )
   );
 };
