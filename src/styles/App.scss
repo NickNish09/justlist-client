@@ -4,10 +4,12 @@
 $light-bg-color: #dedede;
 $light: #e2e2e2;
 $primary: #1e237e;
+$primary-light: #495faf;
 $primary-dark: #151959;
 $dark-bg-color: #4d4d4d;
 $dark: #1b1b1b;
 $border-color: red;
+$font-medium: 18px;
 $font-large: 24px;
 $font-x-large: 30px;
 
@@ -77,6 +79,22 @@ $font-x-large: 30px;
 
 .path-title {
   font-size: $font-x-large;
+  margin: 0.4em 0;
+}
+
+.page-url{
+  font-size: $font-medium;
+  margin: 0 0.5em 0 0;
+  color: $primary
+}
+
+.page-url:hover{
+  color: $primary-light
+}
+
+.page-url-container{
+  display: flex;
+  margin-bottom: 0.8em;
 }
 
 .text-striked{

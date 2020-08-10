@@ -7,6 +7,7 @@ import TodoForm from '../components/TodoForm';
 import { useTodos } from '../contexts/TodosContext';
 import { TODO_CREATE_TYPE, TODO_DELETE_TYPE, TODO_UPDATE_TYPE } from '../config/constants';
 import { devSocketUrl, productionSocketUrl } from '../services/api';
+import PageUrls, { IPage } from '../components/PageUrls';
 
 interface TodosProps {
   path: string;
@@ -14,6 +15,7 @@ interface TodosProps {
 
 const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   // const [todos, setTodos] = useState<Array<ITodoItem>>([]);
+  const [pages, setPages] = useState<Array<IPage>>([]);
   const [pageId, setPageId] = useState<string>('');
   const {
     checkIfContainsTodo, setTodos, updateTodo, appendTodo, removeTodo, todos,
@@ -49,7 +51,8 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
     console.log(path);
     console.log('getting todos...');
     findOrCreatePage(path).then((response) => {
-      console.log(response.data.page.todos);
+      console.log(response.data.page);
+      setPages(response.data.page.pages);
       setTodos(response.data.page.todos);
       setPageId(response.data.page._id);
     });
@@ -60,6 +63,7 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
       : (
         <div className="container">
           <p className="path-title">{window.location.pathname}</p>
+          <PageUrls pages={pages} />
           <TodosList pageId={pageId} />
           <br />
           <TodoForm pageId={pageId} />
