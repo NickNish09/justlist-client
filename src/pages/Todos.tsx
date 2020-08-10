@@ -1,6 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import { HotKeys } from 'react-hotkeys';
+import { CSVLink } from 'react-csv';
+import { DownloadOutlined } from '@ant-design/icons';
 import { ITodoItem } from '../components/TodoItem';
 import TodosList from '../components/TodosList';
 import { findOrCreatePage } from '../services/todos';
@@ -72,13 +74,25 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
     });
   }, [path]);
 
+  const formatedTodos = () => (
+    todos.map((todo) => ([todo.content]))
+  );
+
   return (
     pageId === '' ? <div>loading...</div>
       : (
         <HotKeys keyMap={keyMap}>
           <div className="container">
             <HotKeys handlers={handlers}>
-              <p className="path-title">{window.location.pathname}</p>
+              <div className="d-flex align-items-center">
+                <p className="path-title">{window.location.pathname}</p>
+                <CSVLink
+                  data={formatedTodos()}
+                  filename={`${path}.csv`}
+                >
+                  <DownloadOutlined className="download-icon" />
+                </CSVLink>
+              </div>
               <PageUrls pages={pages} />
               <TodosList pageId={pageId} />
               <br />
