@@ -23,6 +23,13 @@ $font-x-large: 30px;
   display: flex;
 }
 
+.align-items-center{
+  align-items: center;
+}
+.justify-content-center{
+  justify-content: center;
+}
+
 .container-url{
   display: flex;
 }
@@ -79,7 +86,7 @@ $font-x-large: 30px;
 
 .path-title {
   font-size: $font-x-large;
-  margin: 0.4em 0;
+  margin: 0.4em 0.4em 0.4em 0;
 }
 
 .page-url{
@@ -99,4 +106,8 @@ $font-x-large: 30px;
 
 .text-striked{
   text-decoration: line-through;
+}
+
+.download-icon{
+  color: $primary
 }
