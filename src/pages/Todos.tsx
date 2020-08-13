@@ -38,7 +38,7 @@ const Todos: FC<TodosProps> = ({ path }: TodosProps) => {
   };
 
   useEffect(() => {
-    const socket = socketIOClient(devSocketUrl);
+    const socket = socketIOClient(productionSocketUrl);
     socket.on('connect', () => {
       console.log('connected');
     });
